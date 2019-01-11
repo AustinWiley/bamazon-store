@@ -1,0 +1,24 @@
+{
+  "name": "bamazon-store",
+  "version": "1.0.0",
+  "description": "Node and MySQL inventory control for a fake store called 'Bamazon'",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AustinWiley/bamazon-store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AustinWiley/bamazon-store/issues"
+  },
+  "homepage": "https://github.com/AustinWiley/bamazon-store#readme",
+  "dependencies": {
+    "inquirer": "^6.2.1",
+    "mysql": "^2.16.0"
+  }
+}
