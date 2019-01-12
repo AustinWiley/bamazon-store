@@ -51,7 +51,7 @@ const startShopping = () => {
     })
 };
 
-//read items
+//read items from DB and compare with customer input
 function checkInventory(id, quantity) {
     console.log("checking inventory...\n");
     connection.query("SELECT * FROM products WHERE item_id = ? AND stock_quantity >= ?",[id, quantity], function (err, res) {
