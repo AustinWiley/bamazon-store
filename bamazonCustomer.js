@@ -41,7 +41,14 @@ const startShopping = () => {
         {
             name: "quantity",
             type: 'input',
-            message: 'How many units of this product would you like to purchase'
+            message: 'How many units of this product would you like to purchase',
+            validate: function (input) {
+                if (isNaN(input)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         }
     ]).then(res => {
         // console.log(res.item_id);

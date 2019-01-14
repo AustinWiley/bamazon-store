@@ -28,19 +28,162 @@ const managerMenue = () => {
         // console.log(res.manager_list);
         switch (res.manager_list) {
             case 'View Products for Sale':
-            console.log('View Products for Sale');
-            break;
+                viewProducts();
+                break;
             case 'View Low Inventory':
-            console.log('View Low Inventory');
-            break;
+                lowInventory();
+                break;
             case 'Add to Inventory':
-            console.log('Add to Inventory');
-            break;
+                addInventory();
+                break;
             case 'Add New Product':
-            console.log('Add New Product');
-            break;
+                addProduct();
+                break;
         }
 
         // checkInventory(res.item_id, res.quantity)
     })
 };
+
+const viewProducts = () => {
+    console.log("\nSelecting all products...");
+    connection.query("SELECT * FROM products", function (err, res) {
+        if (err) throw err;
+        console.log('\x1b[32m')
+        for (let i = 0; i < res.length; i++) {
+            console.log(`Item_ID: ${res[i].item_id} || ${res[i].product_name} || Price: $${res[i].price} || Stock quantity: ${res[i].stock_quantity}`);
+        };
+        console.log('\x1b[0m');
+        managerMenue();
+    });
+};
+
+const lowInventory = () => {
+    console.log("\nSelecting all products with low inventory...");
+    connection.query("SELECT * FROM products", function (err, res) {
+        if (err) throw err;
+        let lowStock = 0;
+        console.log('\x1b[32m')
+        for (let i = 0; i < res.length; i++) {
+            if (res[i].stock_quantity <= 5) {
+                lowStock++;
+                console.log(`Item_ID: ${res[i].item_id} || ${res[i].product_name} || Price: $${res[i].price} || Stock quantity: ${res[i].stock_quantity}`);
+            }
+        };
+        console.log("\x1b[31m" + lowStock + "\x1b[32m Items with low inventory\x1b[0m\n")
+        // console.log('\x1b[0m');
+        managerMenue();
+    });
+};
+
+const addInventory = () => {
+    inquirer.prompt([{
+            name: 'item_id',
+            type: 'input',
+            message: 'Enter the item ID for product you would like to undate Inventory'
+        },
+        {
+            name: "quantity",
+            type: 'input',
+            message: 'How many units would you like to add to inventory',
+            validate: function (input) {
+                if (isNaN(input)) {
+                    return 'Enter a number';
+                } else {
+                    return true;
+                }
+            }
+        }
+    ]).then(res => {
+        // console.log(res.item_id);
+        // console.log(res.quantity);
+        var query = connection.query(
+            "UPDATE products SET stock_quantity = stock_quantity + ? WHERE item_id = ?",
+            [res.quantity, res.item_id],
+            function (err, res) {
+                // console.log(res.affectedRows + " products updated!\n");
+                // Call deleteProduct AFTER the UPDATE completes
+                // console.log('updated DB');
+                if (res.affectedRows <= 0 || res == undefined) {
+                    console.log()
+                    console.log('\x1b[31mSomething went wrong. . . . .Did you enter a valid Item ID?\x1b[0m\n')
+                } else if (res.affectedRows >= 1) {
+                    console.log('\n\x1b[32mINVENTORY UPDATED!!!\x1b[0m\n')
+                } else {
+                    console.log('\x1b[31mSomething went wrong. . . . .\x1b[0m\n')
+                }
+                managerMenue();
+            }
+        );
+
+    })
+};
+// UPDATE mytable 
+//   SET logins = logins + 1 
+//   WHERE id = 12
+
+const addProduct = () => {
+    inquirer.prompt([{
+            type: 'unput',
+            name: 'item_id',
+            message: 'Enter a unique product ID number',
+            validate: function (input) {
+                if (isNaN(input)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Enter poroduct name'
+        },
+        {
+            type: 'input',
+            name: 'department',
+            message: 'Enter product Department'
+        },
+        {
+            type: 'input',
+            name: 'price',
+            message: 'Enter Price',
+            validate: function (input) {
+                if (isNaN(input)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'quantitity',
+            message: 'Enter inventory quantity',
+            validate: function (input) {
+                if (isNaN(input)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    ]).then(res => {
+        console.log(res);
+
+
+
+        
+    })
+
+
+};
+
+// validate: function (input) {
+//     if (isNaN(input)) {
+//         return false;
+//     } else {
+//         return true;
+//     }
+// }
