@@ -67,12 +67,15 @@ const checkInventory = (id, quantity) => {
             setTimeout(function () {
                 showProducts();
             }, delayInMilliseconds);
+          //if there is enough enventory then update remaining inventory and product_sales  
         } else if (res[0].stock_quantity >= quantity) {
-            console.log(`\n\x1b[32mORDER PLACED. Your total is $${res[0].price * quantity}\x1b[0m`)
+            let purchaseTotal = res[0].price * quantity;
+            console.log(`\n\x1b[32mORDER PLACED. Your total is $${purchaseTotal}\x1b[0m`)
             //3 second delay
             let newQuantity = res[0].stock_quantity - quantity;
+            let productSales = res[0].product_sales + purchaseTotal;
             setTimeout(function () {
-                updateProductDB(id, newQuantity);
+                updateProductDB(id, newQuantity, productSales);
             }, delayInMilliseconds);
         } else {
             console.log(`\x1b[31mInsuffecient product inventory. Only ${res[0].stock_quantity} units in stock\x1b[0m`);
@@ -85,11 +88,12 @@ const checkInventory = (id, quantity) => {
 };
 
 //Update the products table the bamazon database.
-const updateProductDB = (id, newQuantity) => {
+const updateProductDB = (id, newQuantity, productSales) => {
     var query = connection.query(
         "UPDATE products SET ? WHERE ?",
         [{
-            stock_quantity: newQuantity
+            stock_quantity: newQuantity,
+            product_sales: productSales
         },
         {
             item_id: id

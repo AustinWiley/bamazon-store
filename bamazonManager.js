@@ -113,18 +113,7 @@ const addInventory = () => {
 };
 
 const addProduct = () => {
-    inquirer.prompt([{
-            type: 'unput',
-            name: 'item_id',
-            message: 'Enter a unique product ID number',
-            validate: function (input) {
-                if (isNaN(input)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        },
+    inquirer.prompt([
         {
             type: 'input',
             name: 'name',
@@ -163,7 +152,6 @@ const addProduct = () => {
         console.log(res.quantity);
         connection.query(
             'INSERT INTO products SET ?', {
-                item_id: res.item_id,
                 product_name: res.name,
                 department_name: res.department,
                 price: res.price,

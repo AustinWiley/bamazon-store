@@ -1,5 +1,5 @@
 USE bamazon_DB;
-
+-- products
 INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
 VALUES (1, 'Flannel Shirt', 'clothing', 24.99, 4);
 
@@ -29,3 +29,16 @@ VALUES (9, 'USB drive (16G)', 'electronics', 19.75, 10);
 
 INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
 VALUES (10, 'Bell Biv Devoe casset tape', 'muic', 2.99, 8);
+
+--Departments
+INSERT INTO departments (department_name, overhead_costs)
+VALUES ('clothing', 200);
+
+INSERT INTO departments (department_name, overhead_costs)
+VALUES ('grocery', 100);
+
+INSERT INTO departments (department_name, overhead_costs)
+VALUES ('pharmacy', 200);
+
+INSERT INTO departments (department_name, overhead_costs)
+VALUES ('electronics', 300);
