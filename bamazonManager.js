@@ -13,7 +13,6 @@ const connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id: " + connection.threadId);
-    // connection.end();
     console.log("connected")
     managerMenue();
 });
@@ -23,9 +22,9 @@ const managerMenue = () => {
         name: 'manager_list',
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product']
+        choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product', 'EXIT']
     }).then(res => {
-        // console.log(res.manager_list);
+        // do what was selected
         switch (res.manager_list) {
             case 'View Products for Sale':
                 viewProducts();
@@ -39,10 +38,10 @@ const managerMenue = () => {
             case 'Add New Product':
                 addProduct();
                 break;
-        }
-
-        // checkInventory(res.item_id, res.quantity)
-    })
+            case 'EXIT':
+                connection.end();
+        };
+    });
 };
 
 const viewProducts = () => {
@@ -71,7 +70,6 @@ const lowInventory = () => {
             }
         };
         console.log("\x1b[31m" + lowStock + "\x1b[32m Items with low inventory\x1b[0m\n")
-        // console.log('\x1b[0m');
         managerMenue();
     });
 };
@@ -95,15 +93,10 @@ const addInventory = () => {
             }
         }
     ]).then(res => {
-        // console.log(res.item_id);
-        // console.log(res.quantity);
         var query = connection.query(
             "UPDATE products SET stock_quantity = stock_quantity + ? WHERE item_id = ?",
             [res.quantity, res.item_id],
             function (err, res) {
-                // console.log(res.affectedRows + " products updated!\n");
-                // Call deleteProduct AFTER the UPDATE completes
-                // console.log('updated DB');
                 if (res.affectedRows <= 0 || res == undefined) {
                     console.log()
                     console.log('\x1b[31mSomething went wrong. . . . .Did you enter a valid Item ID?\x1b[0m\n')
@@ -118,9 +111,6 @@ const addInventory = () => {
 
     })
 };
-// UPDATE mytable 
-//   SET logins = logins + 1 
-//   WHERE id = 12
 
 const addProduct = () => {
     inquirer.prompt([{
@@ -159,7 +149,7 @@ const addProduct = () => {
         },
         {
             type: 'input',
-            name: 'quantitity',
+            name: 'quantity',
             message: 'Enter inventory quantity',
             validate: function (input) {
                 if (isNaN(input)) {
@@ -170,20 +160,20 @@ const addProduct = () => {
             }
         }
     ]).then(res => {
-        console.log(res);
-
-
-
-        
-    })
-
-
+        console.log(res.quantity);
+        connection.query(
+            'INSERT INTO products SET ?', {
+                item_id: res.item_id,
+                product_name: res.name,
+                department_name: res.department,
+                price: res.price,
+                stock_quantity: res.quantity
+            },
+            function (err) {
+                if (err) throw err;
+                console.log('\n\x1b[32mPRODUCT ADDED!!!\x1b[0m\n')
+                managerMenue();
+            }
+        );
+    });
 };
-
-// validate: function (input) {
-//     if (isNaN(input)) {
-//         return false;
-//     } else {
-//         return true;
-//     }
-// }
