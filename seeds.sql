@@ -42,3 +42,13 @@ VALUES ('pharmacy', 200);
 
 INSERT INTO departments (department_name, overhead_costs)
 VALUES ('electronics', 300);
+
+--Used for supervisor js
+SELECT departments.department_id, departments.department_name,
+departments.overhead_costs,
+SUM(product_sales) AS product_salesBitch,
+(SUM(product_sales) - departments.overhead_costs) AS profit
+FROM  products
+CROSS JOIN departments
+WHERE products.department_name =departments.department_name
+GROUP BY  products.department_name;
