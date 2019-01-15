@@ -13,7 +13,6 @@ const connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id: " + connection.threadId);
-    // connection.end();
     console.log("connected")
     showProducts();
 });
@@ -51,11 +50,8 @@ const startShopping = () => {
             }
         }
     ]).then(res => {
-        // console.log(res.item_id);
-        // console.log(res.quantity);
-
         checkInventory(res.item_id, res.quantity)
-    })
+    });
 };
 
 //read items from DB and compare with customer input
@@ -64,8 +60,7 @@ const checkInventory = (id, quantity) => {
     connection.query("SELECT * FROM products WHERE item_id = ?", [id], function (err, res) {
         var delayInMilliseconds = 3000; //3 seconds
         if (err) throw err;
-        // console.log(res)
-        //checks if product exists
+
         if (res.length <= 0 || res == undefined) {
             console.log("\x1b[31mPRODUCT NOT FOUND\x1b[0m")
             //3 second delay
@@ -80,7 +75,7 @@ const checkInventory = (id, quantity) => {
                 updateProductDB(id, newQuantity);
             }, delayInMilliseconds);
         } else {
-            console.log(`\x1b[31mInsuffecient product stock. Only ${res[0].stock_quantity} units in stock\x1b[0m`);
+            console.log(`\x1b[31mInsuffecient product inventory. Only ${res[0].stock_quantity} units in stock\x1b[0m`);
             //3 second delay
             setTimeout(function () {
                 showProducts();
@@ -94,17 +89,13 @@ const updateProductDB = (id, newQuantity) => {
     var query = connection.query(
         "UPDATE products SET ? WHERE ?",
         [{
-                stock_quantity: newQuantity
-            },
-            {
-                item_id: id
-            }
-        ],
+            stock_quantity: newQuantity
+        },
+        {
+            item_id: id
+        }],
         function (err, res) {
             // console.log(res.affectedRows + " products updated!\n");
-            // Call deleteProduct AFTER the UPDATE completes
-            // console.log('updated DB');
-            // console.log(res)
             showProducts();
         }
     );
