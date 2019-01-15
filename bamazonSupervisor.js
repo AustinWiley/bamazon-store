@@ -40,77 +40,22 @@ const supervisorMenue = () => {
 
 const viewSales = () => {
     console.log("\nSelecting all departments...");
-    connection.query("SELECT DISTINCT department_name FROM products", function (err, res) {
+    connection.query("SELECT departments.department_id, departments.department_name, " +
+    "departments.overhead_costs, " +
+    "SUM(product_sales) AS product_sales, " +
+    "(SUM(product_sales) - departments.overhead_costs) AS profit " +
+    "FROM  products " +
+    "CROSS JOIN departments " +
+    "WHERE products.department_name =departments.department_name " +
+    "GROUP BY  products.department_name"
+    , function (err, res) {
         if (err) throw err;
         // console.log(res[0])
         console.log('\x1b[32m')
         for (let i = 0; i < res.length; i++) {
-            console.log(res[i].department_name);
+            console.log(res[i]);
         };
         console.log('\x1b[0m');
         // managerMenue();
     });
 };
-
-
-
-
-// function viewSales() {
-//     // query the database for all items being auctioned
-//     connection.query('SELECT DISTINCT department_name FROM products', function (err, results) {
-//       if (err) throw err;
-//       // once you have the items, prompt the user for which they'd like to bid on
-//       inquirer
-//         .prompt([{
-//             name: "choice",
-//             type: "rawlist",
-//             choices: function () {
-//               var choiceArray = [];
-//               for (var i = 0; i < results.length; i++) {
-//                 choiceArray.push(results[i].item_name);
-//               }
-//               return choiceArray;
-//             },
-//             message: "What auction would you like to place a bid in?"
-//           },
-//           {
-//             name: "bid",
-//             type: "input",
-//             message: "How much would you like to bid?"
-//           }
-//         ])
-//         .then(function (answer) {
-//           // get the information of the chosen item
-//           var chosenItem;
-//           for (var i = 0; i < results.length; i++) {
-//             if (results[i].item_name === answer.choice) {
-//               chosenItem = results[i];
-//             }
-//           }
-  
-//           // determine if bid was high enough
-//           if (chosenItem.highest_bid < parseInt(answer.bid)) {
-//             // bid was high enough, so update db, let the user know, and start over
-//             connection.query(
-//               "UPDATE auctions SET ? WHERE ?",
-//               [{
-//                   highest_bid: answer.bid
-//                 },
-//                 {
-//                   id: chosenItem.id
-//                 }
-//               ],
-//               function (error) {
-//                 if (error) throw err;
-//                 console.log("Bid placed successfully!");
-//                 start();
-//               }
-//             );
-//           } else {
-//             // bid wasn't high enough, so apologize and start over
-//             console.log("Your bid was too low. Try again...");
-//             start();
-//           }
-//         });
-//     });
-//   }
