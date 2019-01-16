@@ -18,7 +18,7 @@ Bamazon is a CLI Node and MYSQL store-front that you can interact with as a Cust
 
 * Once the customer has placed the order, the application checks if the store has enough of the product to meet the customer's request.
 
-   * If not, the app logs the phrase `Insuffecient product inventory.`, and then prevent the order from going through.
+   * If not, the app logs the phrase `Insuffecient product inventory.`, and then prevents the order from going through.
 
 * If the store _does_ have enough of the product it will fulfill the customer's order.
    * This means updating the SQL database to reflect the remaining quantity.
