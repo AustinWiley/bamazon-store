@@ -26,9 +26,9 @@ Bamazon is a CLI Node and MYSQL store-front that you can interact with as a Cust
    
 ### Manager View
 
-* Node application called `bamazonManager.js`. Running this application will:
+* Node application called `bamazonManager.js`. Running this application will allow first promp the manager with a list of options.
 
-  * List a set of menu options:
+* Menu options:
 
     * View Products for Sale
     
