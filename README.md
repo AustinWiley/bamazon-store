@@ -3,27 +3,22 @@
 
 ## Overview
 
-Bamazon is a CLI Node and MYSQL store front that you can interact with as a Customer a Manager or a Supervisor.  
-The app will take in orders from customers and deplete stock from the store's inventory.  The Managers app will handle requests to view inventory or make changes to products and inventory.  The Supervisor app can view sales and profit and add departments. App uses a database called bamazon_db and contains two tables `products` and `departments`.
+Bamazon is a CLI Node and MYSQL store-front that you can interact with as a Customer a Manager or a Supervisor. The app uses a database called bamazon_db and contains two tables `products` and `departments`.
 
 ## How it works
 
 ### Customer View
 
-* Node application called `bamazonCustomer.js`. Uses a MySQL Database called `bamazon`.
-
-* Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
+* Node application called `bamazonCustomer.js`. Running this application will first display all of the items available for sale.
 
 * The app then prompt users with two messages.
 
-   * The first should ask them the ID of the product they would like to buy.
-   * The second message should ask how many units of the product they would like to buy.
+   * The first will ask them the ID of the product they would like to buy.
+   * The second message will ask how many units of the product they would like to buy.
 
 * Once the customer has placed the order, the application checks if the store has enough of the product to meet the customer's request.
 
-   * If not, the app logs a phrase like `Insufficient quantity!`, and then prevent the order from going through.
-   
-   * If not, the app logs a phrase like `Insufficient quantity!`, and then prevent the order from going through.
+   * If not, the app logs the phrase `Insuffecient product inventory.`, and then prevent the order from going through.
 
 * If the store _does_ have enough of the product it will fulfill the customer's order.
    * This means updating the SQL database to reflect the remaining quantity.
@@ -47,13 +42,13 @@ The app will take in orders from customers and deplete stock from the store's in
 
   * If a manager selects `View Low Inventory`, then it will list all items with an inventory count lower than five.
 
-  * If a manager selects `Add to Inventory`, your app will display a prompt that will let the manager "add more" of any item currently in the store.
+  * If a manager selects `Add to Inventory`, the app will display a prompt that will let the manager "add more" of any item currently in the store.
 
-  * If a manager selects `Add New Product`, it will allow the manager to add a completely new product to the store.
+  * If a manager selects `Add New Product`, it will allow the manager to add a completely new product to the store by updating the database.
 
 ### Supervisor View
 
-* Node app called `bamazonSupervisor.js`. Running this application will list a set of menu options:
+* Node application called `bamazonSupervisor.js`. Running this application will list a set of menu options:
 
    * View Product Sales by Department
    
@@ -61,7 +56,7 @@ The app will take in orders from customers and deplete stock from the store's in
 
 * When a supervisor selects `View Product Sales by Department`, the app displays a summarized table in the terminal/bash window.
 
-* The `total_profit` column is calculated on the fly using the difference between `over_head_costs` and `product_sales`. `total_profit` is not stored in any database.
+* The `total_profit` column is calculated on the fly using the difference between `over_head_costs` and `product_sales` over the two tables in teh database. `total_profit` is calculated on the fly and not stored in any database.
 
 ### NPM Packages used
 
