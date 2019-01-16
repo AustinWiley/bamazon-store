@@ -10,22 +10,22 @@ The app will take in orders from customers and deplete stock from the store's in
 
 ### Customer View
 
-1. Node application called `bamazonCustomer.js`. Uses a MySQL Database called `bamazon`.
+* Node application called `bamazonCustomer.js`. Uses a MySQL Database called `bamazon`.
 
-2. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
+* Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
 
-3. The app then prompt users with two messages.
+* The app then prompt users with two messages.
 
    * The first should ask them the ID of the product they would like to buy.
    * The second message should ask how many units of the product they would like to buy.
 
-4. Once the customer has placed the order, the application checks if the store has enough of the product to meet the customer's request.
+* Once the customer has placed the order, the application checks if the store has enough of the product to meet the customer's request.
 
    * If not, the app logs a phrase like `Insufficient quantity!`, and then prevent the order from going through.
    
    * If not, the app logs a phrase like `Insufficient quantity!`, and then prevent the order from going through.
 
-5. If the store _does_ have enough of the product it will fulfill the customer's order.
+* If the store _does_ have enough of the product it will fulfill the customer's order.
    * This means updating the SQL database to reflect the remaining quantity.
    * Once the update goes through it shows the customer the total cost of their purchase.
    
@@ -53,15 +53,15 @@ The app will take in orders from customers and deplete stock from the store's in
 
 ### Supervisor View
 
-1. Node app called `bamazonSupervisor.js`. Running this application will list a set of menu options:
+* Node app called `bamazonSupervisor.js`. Running this application will list a set of menu options:
 
    * View Product Sales by Department
    
    * Create New Department
 
-2. When a supervisor selects `View Product Sales by Department`, the app displays a summarized table in the terminal/bash window.
+* When a supervisor selects `View Product Sales by Department`, the app displays a summarized table in the terminal/bash window.
 
-3. The `total_profit` column is calculated on the fly using the difference between `over_head_costs` and `product_sales`. `total_profit` is not stored in any database.
+* The `total_profit` column is calculated on the fly using the difference between `over_head_costs` and `product_sales`. `total_profit` is not stored in any database.
 
 ### NPM Packages used
 
