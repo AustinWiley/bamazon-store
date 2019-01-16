@@ -18,19 +18,3 @@ CREATE TABLE departments (
   overhead_costs DECIMAL(10,2) NULL,
   PRIMARY KEY (department_id)
 );
-
-
-
-
-SELECT top3000albums.year, top3000albums.album, top3000albums.position, top5000songs.song, top5000songs.artist
-FROM top3000albums
-INNER JOIN top5000songs
-ON top3000albums.artist = top5000songs.artist
-AND top3000albums.year=top5000songs.year
-WHERE top3000albums.artist = 'the beatles' AND top5000songs.artist = 'the beatles'
-ORDER BY top3000albums.year, top3000albums.position;
-
-
-CREATE INDEX by_name ON top5000songs (`artist`);
-CREATE INDEX by_date ON top5000songs (`year`);
-
