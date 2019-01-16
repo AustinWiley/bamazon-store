@@ -51,32 +51,50 @@ const viewSales = () => {
     "GROUP BY  department_id, products.department_name"
     , function (err, res) {
         if (err) throw err;
-        // console.log(res[0])
-        // console.log('\x1b[32m')
-
         var table = new Table({
-            head: ['department_id', 'department_name', 'over_head_cost', 'product_sales', 'profit']
+            head: ['department_id', 'department_name', 'overhead_cost', 'product_sales', 'profit']
           , colWidths: [15, 15, 15, 15, 15]
         });
-
         for (let i = 0; i < res.length; i++) {
-            console.log(res[i]);
-
-
-
-             
-            // table is an Array, so you can `push`, `unshift`, `splice` and friends
             table.push(
                 [res[i].department_id, res[i].department_name, res[i].overhead_costs, res[i].product_sales, res[i].profit]
             );
-             
-
-
-
         };
         console.log(table.toString());
+        supervisorMenue();
+    });
+};
 
-        // console.log('\x1b[0m');
-        // managerMenue();
+const createDepartment = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'department',
+            message: 'Enter new department name'
+        },
+        {
+            type: 'input',
+            name: 'costs',
+            message: 'Enter overhead costs for department',
+            validate: function (input) {
+                if (isNaN(input)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    ]).then(res => {
+        connection.query(
+            'INSERT INTO departments SET ?', {
+                department_name: res.department,
+                overhead_costs: res.costs
+            },
+            function (err) {
+                if (err) throw err;
+                console.log('\n\x1b[32mDepartment ADDED!!!!\x1b[0m\n')
+                supervisorMenue();
+            }
+        );
     });
 };

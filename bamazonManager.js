@@ -149,7 +149,6 @@ const addProduct = () => {
             }
         }
     ]).then(res => {
-        console.log(res.quantity);
         connection.query(
             'INSERT INTO products SET ?', {
                 product_name: res.name,
