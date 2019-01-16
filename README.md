@@ -6,48 +6,32 @@
 Bamazon is a CLI Node and MYSQL store front that you can interact with as a Customer a Manager or a Supervisor.  
 The app will take in orders from customers and deplete stock from the store's inventory.  The Managers app will handle requests to view inventory or make changes to products and inventory.  The Supervisor app can view sales and profit and add departments. App uses a database called bamazon_db and contains two tables `products` and `departments`.
 
-## Instructions
+## How it works
 
 ### Customer View
 
 1. Node application called `bamazonCustomer.js`. Uses a MySQL Database called `bamazon`.
 
-2. there is a Table inside of that database called `products`.
+2. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
 
-3. The products table contains each of the following columns:
-
-   * item_id (unique id for each product)
-
-   * product_name (Name of product)
-
-   * department_name
-
-   * price (cost to customer)
-
-   * stock_quantity (how much of the product is available in stores)
-   
-   * product_sales (price of the product multiplied by the quantity purchased)
-
-4. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
-
-5. The app then prompt users with two messages.
+3. The app then prompt users with two messages.
 
    * The first should ask them the ID of the product they would like to buy.
    * The second message should ask how many units of the product they would like to buy.
 
-6. Once the customer has placed the order, the application checks if the store has enough of the product to meet the customer's request.
+4. Once the customer has placed the order, the application checks if the store has enough of the product to meet the customer's request.
 
    * If not, the app logs a phrase like `Insufficient quantity!`, and then prevent the order from going through.
    
    * If not, the app logs a phrase like `Insufficient quantity!`, and then prevent the order from going through.
 
-7. If the store _does_ have enough of the product it will fulfill the customer's order.
+5. If the store _does_ have enough of the product it will fulfill the customer's order.
    * This means updating the SQL database to reflect the remaining quantity.
    * Once the update goes through it shows the customer the total cost of their purchase.
-
+   
 ### Manager View
 
-* a Node application called `bamazonManager.js`. Running this application will:
+* Node application called `bamazonManager.js`. Running this application will:
 
   * List a set of menu options:
 
@@ -69,23 +53,15 @@ The app will take in orders from customers and deplete stock from the store's in
 
 ### Supervisor View
 
-1. uses a MySQL table called `departments`. Table includes the following columns:
-
-   * department_id
-
-   * department_name
-
-   * over_head_costs
-
-3. Create another Node app called `bamazonSupervisor.js`. Running this application will list a set of menu options:
+1. Node app called `bamazonSupervisor.js`. Running this application will list a set of menu options:
 
    * View Product Sales by Department
    
    * Create New Department
 
-4. When a supervisor selects `View Product Sales by Department`, the app displays a summarized table in the terminal/bash window.
+2. When a supervisor selects `View Product Sales by Department`, the app displays a summarized table in the terminal/bash window.
 
-5. The `total_profit` column is calculated on the fly using the difference between `over_head_costs` and `product_sales`. `total_profit` is not stored in any database.
+3. The `total_profit` column is calculated on the fly using the difference between `over_head_costs` and `product_sales`. `total_profit` is not stored in any database.
 
 ### NPM Packages used
 
