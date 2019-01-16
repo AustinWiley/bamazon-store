@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const Table = require('cli-table');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -47,15 +48,35 @@ const viewSales = () => {
     "FROM  products " +
     "CROSS JOIN departments " +
     "WHERE products.department_name =departments.department_name " +
-    "GROUP BY  products.department_name"
+    "GROUP BY  department_id, products.department_name"
     , function (err, res) {
         if (err) throw err;
         // console.log(res[0])
-        console.log('\x1b[32m')
+        // console.log('\x1b[32m')
+
+        var table = new Table({
+            head: ['department_id', 'department_name', 'over_head_cost', 'product_sales', 'profit']
+          , colWidths: [15, 15, 15, 15, 15]
+        });
+
         for (let i = 0; i < res.length; i++) {
             console.log(res[i]);
+
+
+
+             
+            // table is an Array, so you can `push`, `unshift`, `splice` and friends
+            table.push(
+                [res[i].department_id, res[i].department_name, res[i].overhead_costs, res[i].product_sales, res[i].profit]
+            );
+             
+
+
+
         };
-        console.log('\x1b[0m');
+        console.log(table.toString());
+
+        // console.log('\x1b[0m');
         // managerMenue();
     });
 };
