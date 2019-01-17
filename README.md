@@ -5,6 +5,11 @@
 
 Bamazon is a CLI Node and MYSQL store-front that you can interact with as a Customer a Manager or a Supervisor. The app uses a database called bamazon_db and contains two tables `products` and `departments`.
 
+## Watch the Demo 
+
+* Click the link to watch a full Demo of the app. [Bamazon-Store-app-Demo](https://drive.google.com/file/d/1FidZkgYUqIQPDsvNh_o6NNbf-PWnD7Ek/view)
+##
+
 ## How it works
 
 ### Customer View
@@ -63,7 +68,3 @@ Bamazon is a CLI Node and MYSQL store-front that you can interact with as a Cust
    * [mysql](https://www.npmjs.com/package/mysql)
 
    * [inquirer](https://www.npmjs.com/package/inquirer)
-   
-## Watch the Demo 
-
-* Click the link to watch a full Demo of the app. [Bamazon-Store-app-Demo](https://drive.google.com/file/d/10l92vW4SYR_vJq7nfvVAFDxxpcNnxcUF/view)
